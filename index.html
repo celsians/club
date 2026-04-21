@@ -906,12 +906,14 @@
   </div>
 </div>
 
+<!-- Shuffle script at the very end -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Watch button
+    // Button click
     document.getElementById('watchBtn').onclick = () => {
       window.open('https://gaze.cash/channel.html?chan=AAAAZw', '_blank');
     };
+
     // Search filter
     const searchInput = document.getElementById('searchInput');
     const figures = document.querySelectorAll('#figuresGrid figure');
@@ -920,15 +922,11 @@
       const query = searchInput.value.toLowerCase();
       figures.forEach(figure => {
         const caption = figure.querySelector('figcaption').textContent.toLowerCase();
-        if (caption.includes(query)) {
-          figure.style.display = '';
-        } else {
-          figure.style.display = 'none';
-        }
+        figure.style.display = caption.includes(query) ? '' : 'none';
       });
     });
-  });
-// Randomize figures order
+
+    // Randomize figures order
     const grid = document.getElementById('figuresGrid');
     const figuresArray = Array.from(grid.children);
     for (let i = figuresArray.length - 1; i > 0; i--) {
