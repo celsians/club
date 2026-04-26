@@ -20,12 +20,8 @@
   }
 
   /* Hide support banner styles */
-  #support-banner {
-    display: none;
-  }
-  #support-content {
-    display: none;
-  }
+  #support-banner,
+  #support-content,
   #support-header {
     display: none;
   }
@@ -40,7 +36,7 @@
     text-align: center;
   }
 
-  /* Mutual Aid info beneath title */
+  /* Mutual Aid info */
   #mutual-aid-info {
     font-size: 1.2em;
     color: #0AC18E;
@@ -171,8 +167,8 @@
 /* Refresh button fixed at bottom left with no extra left margin */
 #refreshBtn {
   position: fixed;
-  bottom: 20px; /* bottom position */
-  left: 20px;   /* left position to room */
+  bottom: 20px;
+  left: 20px;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -1017,25 +1013,7 @@
 </div>
 
 <!-- Fixed Refresh Button at bottom left -->
-<button id="refreshBtn" title="Refresh" style="
-  position: fixed;
-  bottom: 20px; /* bottom position */
-  left: 20px;   /* left position to room */
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #0AC18E, #2ecc71);
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  color: #fff;
-  z-index: 1000;
-  transition: background 0.3s, transform 0.2s;
-" onclick="shuffleFigures();">
+<button id="refreshBtn" title="Refresh" onclick="shuffleFigures();">
 &#x21bb; <!-- Unicode refresh icon -->
 </button>
 
@@ -1044,10 +1022,12 @@
   function shuffleFigures() {
     const grid = document.getElementById('figuresGrid');
     const figuresArray = Array.from(grid.children);
+    // Fisher-Yates shuffle
     for (let i = figuresArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [figuresArray[i], figuresArray[j]] = [figuresArray[j], figuresArray[i]];
     }
+    // Append shuffled figures
     figuresArray.forEach(figure => grid.appendChild(figure));
   }
 
