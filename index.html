@@ -23,11 +23,9 @@
   #support-banner {
     display: none;
   }
-
   #support-content {
     display: none;
   }
-
   #support-header {
     display: none;
   }
@@ -163,29 +161,112 @@
     color: #606060;
     text-align: center;
   }
+
+  /* Refresh Button styles (fixed on left) */
+  #refreshBtn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0AC18E, #2ecc71);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #fff;
+    z-index: 1000;
+    transition: background 0.3s, transform 0.2s;
+  }
+  #refreshBtn:hover {
+    background: linear-gradient(135deg, #089d75, #27ae60);
+    transform: scale(1.05);
+  }
 </style>
 </head>
 <body>
-
-<!-- Removed support banner -->
 
 <h1 id="title">NSFW BCH</h1>
 <div id="mutual-aid-info">Mutual Aid - May 2nd</div>
 
 <div id="buttons-container">
   <button id="watchBtn">Watch Free</button>
-  <!-- Search bar -->
   <input type="text" id="searchInput" placeholder="Discover Bitcoin Cash" />
 </div>
 
-<!-- Label + grid container -->
 <div id="app-section">
   <div class="labels-grid-container">
-    <div class="grid-label">RECOMMENDED</div>
+    <div class="grid-label"></div> <!-- Removed the "RECOMMENDED" title but kept spacing -->
     <div class="figures-grid-wrapper">
       <div class="figures-grid" id="figuresGrid">
-        <!-- ALL FIGURES GO HERE, including all your figures -->
+        <!-- All your figures go here -->
         <!-- START OF ALL FIGURES -->
+        <figure>
+          <a href="https://www.cryptorefills.com/?ref=L4JVzCcsxp" target="_blank" rel="noopener noreferrer">
+            <img src="https://raw.githubusercontent.com/jessreplica/bchprojects/refs/heads/main/bch%20agora/public-mobile_300x190.webp" alt="Public Mobile" />
+          </a>
+          <figcaption>Public Mobile</figcaption>
+        </figure>
+        <figure>
+          <a href="https://www.cryptorefills.com/?ref=L4JVzCcsxp" target="_blank" rel="noopener noreferrer">
+            <img src="https://raw.githubusercontent.com/jessreplica/bchprojects/refs/heads/main/bch%20agora/nintendo-eshop_300x190.webp" alt="Nintendo eShop" />
+          </a>
+          <figcaption>Nintendo eShop</figcaption>
+        </figure>
+        <figure>
+          <a href="https://cashtokenmarkets.bch-1.org/" target="_blank" rel="noopener noreferrer">
+            <img src="https://raw.githubusercontent.com/jessreplica/bchprojects/refs/heads/main/bch%20agora/cashtokenmarkets.webp" alt="CashToken Markets" />
+          </a>
+          <figcaption>CashToken Markets</figcaption>
+        </figure>
+        <figure>
+          <a href="https://minisatoshi.cash/" target="_blank" rel="noopener noreferrer">
+            <img src="https://raw.githubusercontent.com/jessreplica/bchprojects/0e86aa070b75b30555380ffc90ca9cfd60c7ddf7/bch%20agora/favicon.svg" alt="minisatoshi.cash" />
+          </a>
+          <figcaption>minisatoshi</figcaption>
+        </figure>
+        <figure>
+          <a href="sideshift.ai/a/uAVybRyzY" target="_blank" rel="noopener noreferrer">
+            <img src="https://raw.githubusercontent.com/jessreplica/bchprojects/6ca949ac127c225ae5de5e04c520fa7ed1194768/bch%20agora/SideShift%20Logo%20Black.svg" alt="SideShift.ai" />
+          </a>
+          <figcaption>SideShift.ai</figcaption>
+        </figure>
+        <figure>
+          <a href="https://ariavpn.net/ref/0ONCc" target="_blank" rel="noopener noreferrer">
+            <img src="https://raw.githubusercontent.com/jessreplica/bchprojects/153cddecdae606c151cb62dad9ef2a0f14cd559f/bch%20agora/aria.svg" alt="AriaVPN" />
+          </a>
+          <figcaption>AriaVPN</figcaption>
+        </figure>
+        <figure>
+          <a href="https://app.cauldron.quest/swap/5f7595b3d20c5ddcf1743b22c614d85239407821350f02ab82dd0981370c5508" target="_blank" rel="noopener noreferrer">
+            <img src="https://raw.githubusercontent.com/jessreplica/bchprojects/refs/heads/main/bch%20agora/breed.png" alt="AGORA" />
+          </a>
+          <figcaption>BREED<p>Top 30<p style="color: #0AC18E;">7,500 sats</p></figcaption>
+        </figure>
+        <figure>
+          <a href="https://t.me/addstickers/bchhoroscopepack1" target="_blank" rel="noopener noreferrer">
+            <img src="https://raw.githubusercontent.com/jessreplica/bchprojects/refs/heads/main/bch%20agora/bitcoincash.svg" alt="BCH Horoscope Sticker Pack" />
+          </a>
+          <figcaption>BCH Horoscope Sticker Pack</figcaption>
+        </figure>
+        <figure>
+          <a href="https://bmap.app/" target="_blank" rel="noopener noreferrer">
+            <img src="https://raw.githubusercontent.com/jessreplica/bchprojects/refs/heads/main/bch%20agora/bmap.png" alt="BMap | Merchant Map" />
+          </a>
+          <figcaption>BMap | Merchant Map</figcaption>
+        </figure>
+        <figure>
+          <a href="https://tapswap.cash/trade/f54ce0297a4017cc922aacde5f7abe7a8397a1058b879f5eb9e2a643d4ec2301" target="_blank" rel="noopener noreferrer">
+            <img src="https://raw.githubusercontent.com/jessreplica/bchprojects/refs/heads/main/bch%20agora/39.png" alt="BCH Guru" />
+          </a>
+          <figcaption>BCH Guru<p style="color: #0AC18E;">11,288 sats</p></figcaption>
+        </figure>
+        <!-- Add remaining figures as needed -->
+               <!-- START OF ALL FIGURES -->
 
                             <figure>
           <a href="https://www.cryptorefills.com/?ref=L4JVzCcsxp" target="_blank" rel="noopener noreferrer">
@@ -930,15 +1011,46 @@
   </div>
 </div>
 
-<!-- Shuffle script at the very end -->
+<!-- Permanent Refresh Button -->
+<button id="refreshBtn" title="Refresh" style="
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0AC18E, #2ecc71);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #fff;
+  z-index: 1000;
+  transition: background 0.3s, transform 0.2s;
+" onclick="shuffleFigures();">
+&#x21bb; <!-- Unicode refresh icon -->
+</button>
+
 <script>
+  // Function to shuffle figures
+  function shuffleFigures() {
+    const grid = document.getElementById('figuresGrid');
+    const figuresArray = Array.from(grid.children);
+    for (let i = figuresArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [figuresArray[i], figuresArray[j]] = [figuresArray[j], figuresArray[i]];
+    }
+    figuresArray.forEach(figure => grid.appendChild(figure));
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
-    // Button click
     document.getElementById('watchBtn').onclick = () => {
       window.open('https://gaze.cash/channel.html?chan=AAAAZw', '_blank');
     };
 
-    // Search filter
     const searchInput = document.getElementById('searchInput');
     const figures = document.querySelectorAll('#figuresGrid figure');
 
@@ -950,16 +1062,12 @@
       });
     });
 
-    // Randomize figures order
-    const grid = document.getElementById('figuresGrid');
-    const figuresArray = Array.from(grid.children);
-    for (let i = figuresArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [figuresArray[i], figuresArray[j]] = [figuresArray[j], figuresArray[i]];
-    }
-    // Append in new order
-    figuresArray.forEach(figure => grid.appendChild(figure));
+    // Initial shuffle on load
+    shuffleFigures();
   });
 </script>
+
+</body>
+</html>
 </body>
 </html>
