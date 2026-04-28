@@ -1,4 +1,32 @@
 <!DOCTYPE html>
+
+<div id="mutual-aid-section">
+  <div id="mutual-aid-info">Next Mutual Aid Date: <span id="aid-date"></span></div>
+</div>
+
+<script>
+  // Function to calculate the next mutual aid date
+  function getNextMutualAidDate() {
+    const sequenceStart = new Date('2024-11-01');
+    const intervalMonths = 3;
+    const today = new Date();
+    let nextDate = new Date(sequenceStart);
+
+    while (nextDate <= today) {
+      nextDate.setMonth(nextDate.getMonth() + intervalMonths);
+    }
+
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return nextDate.toLocaleDateString(undefined, options);
+  }
+
+  // Set and display the next mutual aid date
+  document.addEventListener('DOMContentLoaded', () => {
+    const aidDateSpan = document.getElementById('aid-date');
+    aidDateSpan.textContent = getNextMutualAidDate();
+  });
+</script>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
