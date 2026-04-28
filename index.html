@@ -5,25 +5,35 @@
 </div>
 
 <script>
-  // Function to calculate the next mutual aid date
+  // Function to get the next date in the 3-month sequence on the 1st of each month
   function getNextMutualAidDate() {
-    const sequenceStart = new Date('2024-11-01');
-    const intervalMonths = 3;
     const today = new Date();
-    let nextDate = new Date(sequenceStart);
 
+    // Find the most recent 1st of the month before today
+    let currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    // Generate sequence starting from that date
+    let nextDate = new Date(currentMonthStart);
+
+    // If today is after the 1st of the current month, move to the next 1st
+    if (today > currentMonthStart) {
+      nextDate.setMonth(nextDate.getMonth() + 1);
+    }
+
+    const intervalMonths = 3;
+
+    // Loop until the date is in the future
     while (nextDate <= today) {
       nextDate.setMonth(nextDate.getMonth() + intervalMonths);
     }
 
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return nextDate.toLocaleDateString(undefined, options);
+    return nextDate.toLocaleDateString('en-US', options);
   }
 
-  // Set and display the next mutual aid date
+  // On DOM load, display the next date
   document.addEventListener('DOMContentLoaded', () => {
-    const aidDateSpan = document.getElementById('aid-date');
-    aidDateSpan.textContent = getNextMutualAidDate();
+    document.getElementById('aid-date').textContent = getNextMutualAidDate();
   });
 </script>
 
