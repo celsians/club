@@ -1,42 +1,5 @@
 <!DOCTYPE html>
 
-<div id="mutual-aid-section">
-  <div id="mutual-aid-info">Next Mutual Aid Date: <span id="aid-date"></span></div>
-</div>
-
-<script>
-  // Function to get the next date in the 3-month sequence on the 1st of each month
-  function getNextMutualAidDate() {
-    const today = new Date();
-
-    // Find the most recent 1st of the month before today
-    let currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
-
-    // Generate sequence starting from that date
-    let nextDate = new Date(currentMonthStart);
-
-    // If today is after the 1st of the current month, move to the next 1st
-    if (today > currentMonthStart) {
-      nextDate.setMonth(nextDate.getMonth() + 1);
-    }
-
-    const intervalMonths = 3;
-
-    // Loop until the date is in the future
-    while (nextDate <= today) {
-      nextDate.setMonth(nextDate.getMonth() + intervalMonths);
-    }
-
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return nextDate.toLocaleDateString('en-US', options);
-  }
-
-  // On DOM load, display the next date
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('aid-date').textContent = getNextMutualAidDate();
-  });
-</script>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -229,6 +192,43 @@
 </style>
 </head>
 <body>
+
+  <div id="mutual-aid-section">
+  <div id="mutual-aid-info">Next Mutual Aid Date: <span id="aid-date"></span></div>
+</div>
+
+<script>
+  // Function to get the next date in the 3-month sequence on the 1st of each month
+  function getNextMutualAidDate() {
+    const today = new Date();
+
+    // Find the most recent 1st of the month before today
+    let currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    // Generate sequence starting from that date
+    let nextDate = new Date(currentMonthStart);
+
+    // If today is after the 1st of the current month, move to the next 1st
+    if (today > currentMonthStart) {
+      nextDate.setMonth(nextDate.getMonth() + 1);
+    }
+
+    const intervalMonths = 3;
+
+    // Loop until the date is in the future
+    while (nextDate <= today) {
+      nextDate.setMonth(nextDate.getMonth() + intervalMonths);
+    }
+
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return nextDate.toLocaleDateString('en-US', options);
+  }
+
+  // On DOM load, display the next date
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('aid-date').textContent = getNextMutualAidDate();
+  });
+</script>
 
 <h1 id="title">NSFW BCH</h1>
 <div id="mutual-aid-info">Community Hub</div>
