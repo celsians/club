@@ -1,41 +1,4 @@
 <!DOCTYPE html>
-
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ℕ𝕊𝔽𝕎 𝔹ℂℍ</title>
-<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet" />
-  
-<style>
-  body {
-    font-family: 'Ubuntu', Arial, sans-serif;
-    background: #f0f4f8;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding-top: 0;
-    color: #222;
-  }
-</style>
-
-<div
-  id="aidMondayLink"
-  style="
-    width: 100%;
-    text-align: center;
-    margin: 10px 0;
-    font-size: 1.2em;
-    color: #0AC18E;
-    cursor: pointer;
-  "
-  onclick="alert('Mutual Aid Monday is giving paid forward. Gifts are discretionary and not guaranteed.');"
->
-  #MutualAidMonday
-</div>
-
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -44,7 +7,12 @@
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet" />
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  /* Reset and base styles */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
   body {
     font-family: 'Ubuntu', Arial, sans-serif;
@@ -95,7 +63,7 @@
     transform: scale(1.05);
   }
 
-  /* Search bar styles */
+  /* Search input styles */
   #searchInput {
     padding: 10px 15px;
     font-family: 'Ubuntu', Arial, sans-serif;
@@ -181,7 +149,7 @@
     text-align: center;
   }
 
-  /* Fixed refresh button styles */
+  /* Fixed refresh button styling */
   #refreshBtn {
     position: fixed;
     bottom: 20px;
@@ -209,7 +177,7 @@
 </head>
 <body>
 
-<!-- Place the MutualAidMonday link at the top -->
+<!-- Mutual Aid Monday Link with message updated to "Gifts" -->
 <div
   id="aidMondayLink"
   style="
@@ -221,7 +189,7 @@
     color: #0AC18E;
     cursor: pointer;
   "
-  onclick="alert('Mutual Aid Monday is a community-driven initiative where participants contribute BCH to support mutual aid projects, charities, or community efforts. Contributions are pooled and distributed periodically to foster collective support.\n\nWho participates?\nAnyone in the community can contribute BCH voluntarily to participate and help strengthen community resilience.\n\nWhere are funds stored?\nIn a transparent, on-chain wallet, allowing anyone to verify transactions via Bitcoin Cash block explorers.');"
+  onclick="alert('Mutual Aid Monday is a movement supporting projects. Gifts are discretionary and not guaranteed.');"
 >
   #MutualAidMonday
 </div>
