@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>The Agora Archive</title>
 <!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
 <style>
   /* Reset and base styles */
   * {
@@ -22,9 +22,9 @@
     align-items: center;
   }
 
-  /* Loader styles - shown initially */
+  /* Loader styles */
   #loader {
-    display: flex; /* Show loader initially */
+    display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -32,25 +32,48 @@
     font-weight: 500;
   }
 
-  /* Main content styles - hidden until images load */
+  /* Main container - sit-wide with max for readability */
   #main-content {
     display: none;
     width: 100%;
-    max-width: 1400px;
+    max-width: 1600px;
     padding: 20px;
   }
 
-  /* AGORA Title styles */
+  /* Wrapper for all content to center and limit width */
+  .content-wrapper {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Title with glow and animated gradient text */
   #title {
-    font-size: 3.2em;
-    color: #0AC18E;
+    font-family: 'Pacifico', cursive;
+    font-size: 3em;
+    background: linear-gradient(135deg, #89f7fe, #66a6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-top: 20px;
     margin-bottom: 10px;
     letter-spacing: 2px;
     text-align: center;
+    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: glow 2s infinite alternate ease-in-out;
+    width: 100%;
+  }
+  @keyframes glow {
+    0% {
+      text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    100% {
+      text-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
   }
 
-  /* Subtitle styles */
+  /* Subtitle style */
   .subtitle {
     font-family: 'Ubuntu', Arial, sans-serif;
     font-size: 1.4em;
@@ -60,7 +83,7 @@
     text-align: center;
   }
 
-  /* Mutual Aid Monday link styles */
+  /* Mutual Aid Link style */
   #aidMondayLink {
     width: 100%;
     text-align: center;
@@ -71,33 +94,36 @@
     cursor: pointer;
   }
 
-  /* Buttons container styles */
+  /* Buttons container style */
   #buttons-container {
     display: flex;
     flex-direction: column;
     gap: 10px;
     align-items: center;
     margin-bottom: 20px;
+    width: 100%;
   }
 
-  button {
+  /* Style for the Mature Content button */
+  #watchBtn {
     padding: 12px 24px;
     border: none;
     border-radius: 12px;
-    background: linear-gradient(135deg, #0AC18E, #2ecc71);
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
     color: #fff;
     font-family: 'Ubuntu', Arial, sans-serif;
     font-size: 14px;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    transition: background 0.3s, transform 0.2s;
+    transition: all 0.3s ease;
     width: 200px;
   }
-  button:hover {
-    background: linear-gradient(135deg, #089d75, #27ae60);
+  #watchBtn:hover {
+    box-shadow: 0 0 20px #ff7e5f;
     transform: scale(1.05);
   }
 
+  /* Style for the search input */
   #searchInput {
     padding: 10px 15px;
     font-family: 'Ubuntu', Arial, sans-serif;
@@ -112,33 +138,37 @@
     box-shadow: 0 0 8px rgba(10, 193, 142, 0.6);
   }
 
-  /* Figures grid styles */
+  /* Figures grid styles - cards with hover effects */
   #figuresGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 16px;
+    width: 100%;
   }
   figure {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 8px 0;
-    transition: transform 0.2s, box-shadow 0.2s;
+    padding: 8px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  figure:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.2);
   }
   figure img {
     width: 100px;
     height: 100px;
     object-fit: contain;
-    aspect-ratio: 1 / 1;
     border-radius: 12px;
     background: #ecf0f1;
     padding: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
   }
-  figure img:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  }
+
   figcaption {
     margin-top: 8px;
     font-size: 0.85em;
@@ -146,7 +176,7 @@
     text-align: center;
   }
 
-  /* Refresh button styles */
+  /* Refresh button with glow and pulse effect */
   #refreshBtn {
     position: fixed;
     bottom: 20px;
@@ -164,78 +194,48 @@
     font-size: 24px;
     color: #fff;
     z-index: 1000;
-    transition: background 0.3s, transform 0.2s;
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
   }
   #refreshBtn:hover {
-    background: linear-gradient(135deg, #089d75, #27ae60);
+    box-shadow: 0 0 20px #0AC18E;
     transform: scale(1.05);
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 10px #0AC18E; }
+    50% { box-shadow: 0 0 20px #0AC18E; }
   }
 </style>
 </head>
 <body>
 
-<!-- Loader spinner -->
+<!-- Loader -->
 <div id="loader">Loading content...</div>
 
-<!-- Main content -->
+<!-- Main Content -->
 <div id="main-content">
-  <!-- Your content with all figures -->
-  <div id="aidMondayLink" onclick="alert('Support any project Token ID. Gifts are discretionary, not guaranteed.');">
-    #MutualAidMonday
-  </div>
-  
-<!-- Header Section -->
-<div class="header">
-  <h1 id="title" class="title">
-    <span class="title-text">The Agora Archive</span>
-  </h1>
-</div>
+  <div class="content-wrapper">
+    <!-- Top Mutual Aid Link -->
+    <div id="aidMondayLink" onclick="alert('Support any project Token ID. Gifts are discretionary, not guaranteed.');">
+      #MutualAidMonday
+    </div>
 
-<style>
-  /* Global Styles */
-  body {
-    font-family: 'Ubuntu', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+    <!-- Title -->
+    <h1 id="title">The Agora Archive</h1>
 
-  /* Title Styles */
-  .title {
-    font-size: 2.5em;
-    font-weight: bold;
-    color: #253A49;
-    text-align: center;
-    margin-top: 20px;
-    letter-spacing: 2px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease-in-out;
-  }
+    <!-- Buttons -->
+    <div id="buttons-container">
+      <button id="watchBtn">Mature Content 18+</button>
+      <input type="text" id="searchInput" placeholder="Discover Bitcoin Cash" />
+    </div>
 
-  /* Responsive Title Styles */
-  @media (max-width: 768px) {
-    .title {
-      font-size: 2em;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .title {
-      font-size: 1.5em;
-    }
-  }
-</style>
-  
-  <div id="buttons-container">
-    <button id="watchBtn">Mature Content 18+</button>
-    <input type="text" id="searchInput" placeholder="Discover Bitcoin Cash" />
-  </div>
-
-  <div id="app-section">
-    <div class="labels-grid-container">
-      <div class="figures-grid-wrapper">
-        <div class="figures-grid" id="figuresGrid">
-          <!-- ALL FIGURES START -->
+    <!-- Content Grid -->
+    <div id="app-section">
+      <div class="labels-grid-container">
+        <div class="figures-grid-wrapper">
+          <div class="figures-grid" id="figuresGrid">
+             <!-- ALL FIGURES START -->
 
           <figure>
             <a href="https://gaze.cash/play?vid=AAAB9g" target="_blank" rel="noopener noreferrer">
@@ -1006,67 +1006,67 @@
             <figcaption>BCH PUMP | Smart Contract</figcaption>
           </figure>
           <!-- END OF ALL FIGURES -->
+            <!-- END figures -->
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Fixed refresh button -->
-<button id="refreshBtn" title="Refresh" onclick="shuffleFigures();">
-&#x21bb;
-</button>
+<!-- Refresh Button -->
+<button id="refreshBtn" title="Refresh" onclick="shuffleFigures();">&#x21bb;</button>
 
 <script>
-  // Shuffle function
+  // Shuffle logic
   function shuffleFigures() {
     const grid = document.getElementById('figuresGrid');
-    const figuresArray = Array.from(grid.children);
-    for (let i = figuresArray.length - 1; i > 0; i--) {
+    const figures = Array.from(grid.children);
+    for (let i = figures.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [figuresArray[i], figuresArray[j]] = [figuresArray[j], figuresArray[i]];
+      [figures[i], figures[j]] = [figures[j], figures[i]];
     }
-    figuresArray.forEach(figure => grid.appendChild(figure));
+    figures.forEach(f => grid.appendChild(f));
+  }
+
+  function supportSupport() {
+    alert('Support any project Token ID. Gifts are discretionary, not guaranteed.');
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    const images = document.querySelectorAll('#figuresGrid img');
-    let loadedCount = 0;
-    const totalImages = images.length;
-
-    // Show loader until all images load
-    if (totalImages === 0) {
-      // No images: show content immediately
-      document.getElementById('loader').style.display = 'none';
-      document.getElementById('main-content').style.display = 'block';
+    const imgs = document.querySelectorAll('#figuresGrid img');
+    let loaded = 0;
+    const total = imgs.length;
+    if (total === 0) {
+      document.getElementById('loader').style.display='none';
+      document.getElementById('main-content').style.display='block';
       shuffleFigures();
     } else {
-      images.forEach((img) => {
+      imgs.forEach(img => {
         if (img.complete) {
-          incrementCounter();
+          increment();
         } else {
-          img.onload = incrementCounter;
-          img.onerror = incrementCounter;
+          img.onload = increment;
+          img.onerror = increment;
         }
       });
     }
 
-    function incrementCounter() {
-      loadedCount++;
-      if (loadedCount >= totalImages) {
-        // All images loaded
-        document.getElementById('loader').style.display = 'none';
-        document.getElementById('main-content').style.display = 'block';
+    function increment() {
+      loaded++;
+      if (loaded >= total) {
+        document.getElementById('loader').style.display='none';
+        document.getElementById('main-content').style.display='block';
         shuffleFigures();
       }
     }
 
-    // Search functionality
+    // Search filter
     document.getElementById('searchInput').addEventListener('input', () => {
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      document.querySelectorAll('#figuresGrid figure').forEach(figure => {
-        const caption = figure.querySelector('figcaption').textContent.toLowerCase();
-        figure.style.display = caption.includes(query) ? '' : 'none';
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      document.querySelectorAll('#figuresGrid figure').forEach(f => {
+        const txt = f.querySelector('figcaption').textContent.toLowerCase();
+        f.style.display = txt.includes(q) ? '' : 'none';
       });
     });
 
@@ -1077,5 +1077,10 @@
   });
 </script>
 
+</body>
+</html>
+
+         
+        
 </body>
 </html>
