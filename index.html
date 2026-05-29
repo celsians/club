@@ -66,7 +66,7 @@
     }
   }
 
-  /* Controls: Button + Search + Filter tags (beneath search) */
+  /* Controls: Search + Filter tags (Mutual Aid and Friday Film) */
   #controls {
     display: flex;
     flex-direction: column;
@@ -76,7 +76,7 @@
     width: 100%;
   }
 
-  /* Top row: button + search input */
+  /* Top row: search button + input */
   #top-controls {
     display: flex;
     justify-content: center;
@@ -85,7 +85,7 @@
     width: 100%;
   }
 
-  /* Small filter tags for "Mutual Aid" and "Friday Film" below search input */
+  /* Small filter tags for "All", "Mutual Aid" and "Friday Film" below search input */
   #filterTags {
     display: flex;
     flex-wrap: wrap;
@@ -94,7 +94,7 @@
     margin-top: 8px;
   }
 
-  /* Style for "Mutual Aid" and "Friday Film" tags */
+  /* Style for filter tags */
   .filter-tag {
     padding: 4px 8px;
     font-size: 0.75em;
@@ -184,35 +184,6 @@ figcaption {
     color: #606060;
     text-align: center;
   }
-
-#refreshBtn {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #f0f4f8, #2ecc71);
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    color: #fff;
-    z-index: 1000;
-    transition: all 0.3s ease;
-    animation: pulse 2s infinite;
-  }
-#refreshBtn:hover {
-    box-shadow: 0 0 20px #0AC18E;
-    transform: scale(1.05);
-  }
-@keyframes pulse {
-    0%, 100% { box-shadow: 0 0 10px #0AC18E; }
-    50% { box-shadow: 0 0 20px #0AC18E; }
-  }
 </style>
 </head>
 <body>
@@ -223,15 +194,16 @@ figcaption {
 <!-- Title -->
 <h1 id="title">Megaracash</h1>
 
-<!-- Controls: Search + Filter tags (Mutual Aid and Friday Film) -->
+<!-- Controls: Search + Filter tags (All, Mutual Aid, Friday Film) -->
 <div id="controls">
   <!-- Top row: search button + input -->
   <div id="top-controls" style="display:flex; justify-content:center; gap:15px; width:100%; flex-wrap:wrap;">
     <button id="watchBtn">Mature Content 18+</button>
     <input type="text" id="searchInput" placeholder="Discover Bitcoin Cash" />
   </div>
-  <!-- 2 small filter tags below search input -->
+  <!-- Filter tags including "All" -->
   <div id="filterTags">
+    <button class="filter-tag" data-filter="All">All</button>
     <button class="filter-tag" data-filter="Mutual Aid">Mutual Aid</button>
     <button class="filter-tag" data-filter="Friday Film">Friday Film</button>
   </div>
@@ -239,9 +211,6 @@ figcaption {
 
 <!-- Figures grid -->
 <div id="figuresGrid"></div>
-
-<!-- Refresh Button -->
-<button id="refreshBtn" title="Refresh" onclick="shuffleFigures();">&#x21bb;</button>
 
 <script>
   // Full list of figures
@@ -267,7 +236,7 @@ figcaption {
     { href: "https://app.cauldron.quest/swap/2469acc5afa4b10cb5b5c04afb89c3a3ffd61c5da9c01e26d00951cae2a02544", src: "https://raw.githubusercontent.com/jessreplica/bchprojects/refs/heads/main/bch%20agora/parityUSD.png", alt: "ParityUSD", caption: "ParityUSD", subcaption: "Mutual Aid" },
     { href: "https://bch.games/play/x3hoCzbR", src: "https://raw.githubusercontent.com/jessreplica/bchprojects/0492d54821978ef2448fd722721e1e57ab60fe06/bch%20agora/BCHgames.svg", alt: "BCH.games", caption: "BCH.games" },
     { href: "https://www.cryptorefills.com/?ref=L4JVzCcsxp", src: "https://raw.githubusercontent.com/jessreplica/bchprojects/refs/heads/main/bch%20agora/public-mobile_300x190.webp", alt: "Public Mobile", caption: "Public Mobile" },
-    { href: "https://www.cryptorefills.com/?ref=L4JVzCcsxp", src: "https://raw.githubusercontent.com/jessreplica/bchprojects/refs/heads/main/bch%20agora/nintendo-eshop_300x190.webp", alt: "Nintendo eShop", caption: "Nintendo eShop" },
+    { href: "https://www.cryptorefills.com/?ref=L4JVzCcsxp", src: "https://raw.githubusercontent.com/jessreplica/bchprojects/refs/heads/main/bch%20agora/nintendo-eshop_300x190.webp", alt: "Nintendo eShop", caption: "Nintendo EShop" },
     { href: "https://cashtokenmarkets.bch-1.org/", src: "https://raw.githubusercontent.com/jessreplica/bchprojects/0e86aa070b75b30555380ffc90ca9cfd60c7ddf7/bch%20agora/favicon.svg", alt: "CashToken Markets", caption: "CashToken Markets" },
     { href: "https://minisatoshi.cash/", src: "https://raw.githubusercontent.com/jessreplica/bchprojects/0e86aa070b75b30555380ffc90ca9cfd60c7ddf7/bch%20agora/favicon.svg", alt: "minisatoshi.cash", caption: "minisatoshi" },
     { href: "https://sideshift.ai/a/uAVybRyzY", src: "https://raw.githubusercontent.com/jessreplica/bchprojects/6ca949ac127c225ae5de5e04c520fa7ed1194768/bch%20agora/SideShift%20Logo%20Black.svg", alt: "SideShift.ai", caption: "SideShift.ai" },
@@ -328,6 +297,8 @@ figcaption {
     { href: "https://opreturn-scanner.netlify.app/", src: "https://raw.githubusercontent.com/jessreplica/bchprojects/refs/heads/main/bch%20agora/opreturnscanner.svg", alt: "OP_RETURN Scanner", caption: "OP_RETURN Scanner" },
   ];
 
+  let currentFilter = "All";
+
   function shuffleFigures() {
     const grid = document.getElementById('figuresGrid');
     grid.innerHTML = '';
@@ -344,17 +315,20 @@ figcaption {
         </a>
         <figcaption>${item.caption}${item.subcaption ? `<p style="color: #c0c0c0;">${item.subcaption}</p>` : ''}</figcaption>
       `;
+      // Add data-filter attribute for filtering if needed
+      figure.setAttribute('data-filter', item.subcaption || '');
       grid.appendChild(figure);
     });
   }
 
   function filterFigures(keyword) {
+    currentFilter = keyword;
     document.querySelectorAll("#figuresGrid figure").forEach(f => {
-      const captionText = f.querySelector("figcaption").textContent.toLowerCase();
-      if (captionText.includes(keyword.toLowerCase())) {
+      if (keyword === "All") {
         f.style.display = "";
       } else {
-        f.style.display = "none";
+        const captionText = f.querySelector("figcaption").textContent.toLowerCase();
+        f.style.display = captionText.toLowerCase().includes(keyword.toLowerCase()) ? "" : "none";
       }
     });
   }
@@ -367,33 +341,25 @@ figcaption {
       const q = document.getElementById("searchInput").value.toLowerCase();
       document.querySelectorAll("#figuresGrid figure").forEach(f => {
         const txt = f.querySelector("figcaption").textContent.toLowerCase();
-        f.style.display = txt.includes(q) ? "" : "none";
+        const matchesFilter = currentFilter === "All" || txt.toLowerCase().includes(currentFilter.toLowerCase());
+        const matchesSearch = txt.includes(q);
+        f.style.display = (matchesFilter && matchesSearch) ? "" : "none";
       });
     });
 
-    // Small filter buttons for "Mutual Aid" and "Friday Film"
+    // Filter buttons
     document.querySelectorAll('.filter-tag').forEach(btn => {
       btn.onclick = () => {
         filterFigures(btn.dataset.filter);
       };
     });
-
-    // These are the only filter buttons used
-    document.querySelectorAll('.filter-tag').forEach(btn => {
-      btn.onclick = () => {
-        filterFigures(btn.dataset.filter);
-      };
-    });
-
-    document.querySelectorAll('.filter-tag')[0].onclick = () => filterFigures("Mutual Aid");
-    document.querySelectorAll('.filter-tag')[1].onclick = () => filterFigures("Friday Film");
 
     // "Mature Content" button
     document.getElementById("watchBtn").onclick = () => {
       window.open('https://gaze.cash/channel.html?chan=AAAAZw', '_blank');
     };
 
-    // Load images
+    // Image load handling
     const imgs = document.querySelectorAll('#figuresGrid img');
     let loadedCount = 0;
     const totalImgs = imgs.length;
