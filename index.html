@@ -10,16 +10,15 @@
 <style>
   :root {
     /* Light theme colors */
-    --bg-color: #f0f4f8;
+    --bg-color: #F3DCA3; /* Sandy yellow background */
     --text-color: #333;
     --shadow-color: rgba(0,0,0,0.1);
     --hover-shadow-color: rgba(0,0,0,0.2);
-    --filter-tag-bg: #fff;
+    --filter-tag-bg: #fff; /* Tag backgrounds */
     --filter-tag-hover: #e0f7fa;
-    --figure-bg: #fff;
+    --figure-bg: #F3DCA3; /* Figures background */
     --figure-shadow: rgba(0,0,0,0.1);
     --caption-color: #606060;
-    --subcaption-color: #c0c0c0;
     --title-gradient: linear-gradient(135deg, #89f7fe, #66a6ff);
   }
 
@@ -74,11 +73,13 @@
     -webkit-text-fill-color: transparent;
     margin: 0;
     letter-spacing: 2px;
-    text-shadow: 0 4px 6px var(--shadow-color);
+    /* Removed text-shadow for clarity */
+    /* Keep the glow animation for visual interest */
     animation: glow 2s infinite alternate ease-in-out;
     flex: 1 1 auto;
     min-width: 200px;
     text-align: center;
+    -webkit-font-smoothing: antialiased; /* Smoother font rendering in WebKit browsers */
   }
 
   @keyframes glow {
@@ -174,7 +175,7 @@
   }
 
   /* Figures grid styles */
-#figuresGrid {
+  #figuresGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 15px;
@@ -183,7 +184,7 @@
     margin: auto;
   }
 
-figure {
+  figure {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -193,117 +194,117 @@ figure {
     padding: 10px;
     transition: transform 0.3s, box-shadow 0.3s;
   }
-figure:hover {
+  figure:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 20px var(--hover-shadow-color);
   }
-figure img {
+  figure img {
     width: 100px;
     height: 100px;
     object-fit: contain;
     border-radius: 8px;
     padding: 4px;
   }
-figcaption {
+  figcaption {
     margin-top: 8px;
     font-size: 0.75em;
     color: var(--caption-color);
-}
+  }
 
-/* --- Modal styles --- */
+  /* --- Modal styles --- */
 
-/* Default (light mode) overlay */
-#giftModal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255,255,255,0.8);
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
+  /* Semi-transparent overlay, now matching background color to avoid white residual */
+  #giftModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(243, 220, 162, 0.8); /* semi-transparent sandy yellow overlay */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
 
-/* Dark mode overlay */
-#giftModal.dark-mode {
-  background: rgba(18, 18, 18, 0.8);
-}
+  /* Dark mode overlay remains dark */
+  #giftModal.dark-mode {
+    background: rgba(18, 18, 18, 0.8);
+  }
 
-/* Modal content box (default light) */
-#giftModal > div {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 400px;
-  width: 90%;
-  text-align: center;
-  box-shadow: 0 4px 8px var(--shadow-color);
-}
+  /* Modal content box, sandy yellow background to remove white */
+  #giftModal > div {
+    background: #F3DCA3; /* sandy yellow, no white */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 4px 8px var(--shadow-color);
+  }
 
-/* Dark mode modal content */
-#giftModal.dark-mode > div {
-  background: #222;
-  color: #eee;
-}
+  /* Dark mode modal content */
+  #giftModal.dark-mode > div {
+    background: #222;
+    color: #eee;
+  }
 
-/* Buttons inside modal to match theme */
-#giftModal > div button {
-  margin: 10px 0;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-family: 'Ubuntu', Arial, sans-serif;
-  font-size: 14px;
-  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
-}
-#giftModal > div button:hover {
-  box-shadow: 0 0 20px #66a6ff;
-}
-#giftModal.dark-mode > div button {
-  background: #444;
-  color: #eee;
-}
+  /* Buttons inside modal */
+  #giftModal > div button {
+    margin: 10px 0;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Ubuntu', Arial, sans-serif;
+    font-size: 14px;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+  }
+  #giftModal > div button:hover {
+    box-shadow: 0 0 20px #66a6ff;
+  }
+  #giftModal.dark-mode > div button {
+    background: #444;
+    color: #eee;
+  }
 
-/* Fullscreen iframe overlay styles */
-#iframeOverlay {
-  display: none; /* Hidden by default */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.8);
-  justify-content: center;
-  align-items: center;
-  z-index: 99999; /* Very high to be above all others */
-}
-#iframeOverlay.show {
-  display: flex;
-}
+  /* Fullscreen iframe overlay styles */
+  #iframeOverlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+  }
+  #iframeOverlay.show {
+    display: flex;
+  }
 
-#refillsIframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
+  #refillsIframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
 
-#closeIframe {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  width: 30px;
-  height: 30px;
-  background: #f44336;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-size: 20px;
-  cursor: pointer;
-  z-index: 100000; /* Above overlay */
-}
+  #closeIframe {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    background: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 100000;
+  }
 </style>
 </head>
 <body>
