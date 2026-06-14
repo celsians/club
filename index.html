@@ -93,12 +93,13 @@
   }
 
   /* Buttons styling */
-  #darkModeToggle, #giftButton {
+  #darkModeToggle, #giftButton, #categoriesButton {
     padding: 8px 12px;
     border: none;
     border-radius: 6px;
     font-family: 'Ubuntu', Arial, sans-serif;
     font-size: 0.9em;
+    cursor: pointer;
   }
   #darkModeToggle {
     background: var(--filter-tag-bg);
@@ -115,6 +116,14 @@
   }
   #giftButton:hover {
     box-shadow: 0 0 20px #66a6ff;
+    transform: scale(1.05);
+  }
+
+  #categoriesButton {
+    background: #ccc;
+  }
+  #categoriesButton:hover {
+    background: #bbb;
     transform: scale(1.05);
   }
 
@@ -304,11 +313,13 @@ figcaption {
   <div id="top-buttons">
     <button id="darkModeToggle">Dark Mode</button>
     <button id="giftButton">Gift</button>
+    <button id="categoriesButton">All Categories</button>
   </div>
   <div id="search-container" style="width:100%; max-width:600px; margin-top:10px;">
     <input type="search" id="search-input" placeholder="Discover Bitcoin Cash" />
   </div>
-  <div id="tags">
+  <!-- Hidden category tags container -->
+  <div id="categoriesContainer" style="display: none; margin-top: 10px; justify-content: center; flex-wrap: wrap;">
     <button class="tag" data-filter="All">All</button>
     <button class="tag" data-filter="Mutual Aid">Mutual Aid</button>
     <button class="tag" data-filter="Friday Film">Friday Film</button>
@@ -461,6 +472,18 @@ document.querySelectorAll('.tag').forEach(tag => {
     });
   };
 });
+
+// Toggle categories container
+const categoriesBtn = document.getElementById('categoriesButton');
+const categoriesContainer = document.getElementById('categoriesContainer');
+
+categoriesBtn.onclick = () => {
+  if (categoriesContainer.style.display === 'none') {
+    categoriesContainer.style.display = 'flex';
+  } else {
+    categoriesContainer.style.display = 'none';
+  }
+};
 
 // Modal controls
 const giftBtn = document.getElementById('giftButton');
