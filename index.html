@@ -298,28 +298,32 @@
     z-index: 100000;
   }
 
-/* Back to Top Button Styles */
-#backToTop {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  padding: 10px 15px;
-  font-size: 1.5em;
-  background-color: #66ccff;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 4px 8px var(--shadow-color);
-  display: none; /* Hidden by default */
-  z-index: 9999;
-  transition: background-color 0.3s, transform 0.3s;
-}
+  /* Back to Top Button Styles - make it perfectly circular */
+  #backToTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px; /* set fixed width */
+    height: 50px; /* set fixed height to match width for perfect circle */
+    font-size: 1.5em;
+    background-color: #66ccff;
+    color: #fff;
+    border: none;
+    border-radius: 50%; /* create circle shape */
+    cursor: pointer;
+    box-shadow: 0 4px 8px var(--shadow-color);
+    display: none; /* Hidden by default */
+    z-index: 9999;
+    transition: background-color 0.3s, transform 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* center icon/text inside */
+  }
 
-#backToTop:hover {
-  background-color: #55bbee;
-  transform: scale(1.1);
-}
+  #backToTop:hover {
+    background-color: #55bbee;
+    transform: scale(1.1);
+  }
 </style>
 </head>
 <body>
@@ -382,19 +386,19 @@
 <script>
 // Figures array
 const figures = [
-// Mutual Aid / Commerce
+  // Mutual Aid / Commerce
   { href: "https://unspent.cash/s?q=eJwrWymSLzSVO30Nv5%2Fkk3XaCw9OqzV5%2F2J5xxoAhj0L9g%3D%3D", src: "https://i.postimg.cc/8Ft68f9T/koala.png", alt: "Currumbin Wildlife Hospital", caption: "Currumbin Wildlife Hospital", subcaption: "Mutual Aid Contract" },
   { href: "https://unspent.cash/s?q=eJwrWyly6%2FGBQ1J7kj4zcBz4NT1vk0%2FSztpbHWsAtGYOCQ%3D%3D", src: "https://i.postimg.cc/jnzqbG26/elephants.png", alt: "Global Sanctuary for Elephants", caption: "Global Sanctuary for Elephants", subcaption: "Mutual Aid Contract" },
   { href: "https://unspent.cash/s?q=eJwrWylS6OEXxvnDZ%2BWUlatMS%2F%2FlXzeU2jazYw0AkugMKg%3D%3D", src: "https://i.postimg.cc/xNKj2W8y/treehousehumane.png", alt: "Tree House Humane Society", caption: "Tree House Humane Society", subcaption: "Mutual Aid Contract" },
   { href: "https://www.coastberrycompany.com/", src: "https://i.postimg.cc/RNznSJMK/coastberry.png", alt: "Coast Berry Company", caption: "Coast Berry Company", subcaption: "Mutual Aid Item" },
-// Community
+  // Community
   { href: "https://www.coingecko.com/en/coins/mother-iggy", src: "https://i.postimg.cc/HrwnmCGT/MOTHER.png", alt: "MOTHER", caption: "MOTHER", subcaption: "Community Stats" },
   { href: "https://tokenexplorer.cash/?tokenId=d9ab24ed15a7846cc3d9e004aa5cb976860f13dac1ead05784ee4f4622af96ea", src: "https://i.postimg.cc/3kXNhQsb/FURU.png", alt: "FURU", caption: "FURU", subcaption: "Community Stats" },
   { href: "https://tokenexplorer.cash/?tokenId=80cf212abf3b910f097c2d94eeb04d8e929d4ae6e3ad9c7b1df6cfff35b8ed71", src: "https://i.postimg.cc/fVcysQG2/CELQ.png", alt: "CELQ", caption: "CELQ", subcaption: "Community Stats" },
   { href: "https://bchnostr.com/", src: "https://i.postimg.cc/Cx84BqXy/bchnostr.png", alt: "BCHNostr", caption: "BCHNostr", subcaption: "Community Social" },
   { href: "https://gaze.cash/", src: "https://i.postimg.cc/QFzYNMpZ/gaze.png", alt: "Gaze.Cash", caption: "Gaze.Cash", subcaption: "Media Community" },
   { href: "https://celsians.github.io/club/", src: "https://i.postimg.cc/7fDQ9p3S/celsians.png", alt: "Celsians Club", caption: "Celsians Club", subcaption: "Community Ecosystem" },
-// Defi
+  // DeFi
   { href: "https://bchbull.com/", src: "https://i.postimg.cc/G8TxMPN8/bchbull-dark.png", alt: "BCH Bull", caption: "BCH Bull", subcaption: "DeFi" },
   { href: "https://bch.games/", src: "https://i.postimg.cc/G8TxMPNs/BCHgames.png", alt: "BCH.games", caption: "BCH.games", subcaption: "DeFi" },
   { href: "https://bchpump.cash/pump/about", src: "https://i.postimg.cc/MMfms041/bchpump.png", alt: "BCH PUMP", caption: "BCH PUMP", subcaption: "DeFi" },
@@ -405,8 +409,7 @@ const figures = [
   { href: "https://tokenaut.cash/", src: "https://i.postimg.cc/7PtQvt6k/tokenaut.png", alt: "Tokenaut", caption: "Tokenaut", subcaption: "DeFi" },
   { href: "defillama.com/chain/Bitcoincash", src: "https://i.postimg.cc/QKLkv9Gy/defillama.png", alt: "DeFi Llama", caption: "DeFi Llama", subcaption: "DeFi" },
   { href: "https://paryonusd.com/app", src: "https://i.postimg.cc/xcnP4jdH/paryonusd.png", alt: "ParyonUSD", caption: "ParyonUSD", subcaption: "DeFi Borrowing" },
-
-// Self Custody
+  // Self Custody
   { href: "https://wallet.bitcoin.com/", src: "https://i.postimg.cc/5Y4Jbm2P/bcom-logo.png", alt: "Bitcoin.com", caption: "Bitcoin.com", subcaption: "Self Custody" },
   { href: "https://electroncash.org/", src: "https://i.postimg.cc/8JZS5r7B/electroncash.png", alt: "Electron Cash", caption: "Electron Cash", subcaption: "Self Custody" },
   { href: "https://cakewallet.com/", src: "https://i.postimg.cc/MM6wqYp3/cakewallet.png", alt: "Cake Wallet", caption: "Cake Wallet", subcaption: "Self Custody" },
@@ -417,14 +420,12 @@ const figures = [
   { href: "https://www.paytaca.com/", src: "https://i.postimg.cc/2b0D6B1G/paytaca.png", alt: "Paytaca", caption: "Paytaca", subcaption: "Self Custody" },
   { href: "https://selene.cash/", src: "https://i.postimg.cc/qh1TRCN1/selene.png", alt: "Selene", caption: "Selene", subcaption: "Self Custody" },
   { href: "https://stackwallet.com/", src: "https://i.postimg.cc/0MVsQJzW/stack.png", alt: "Stack Wallet", caption: "Stack Wallet", subcaption: "Self Custody" },
-  
-// Privacy
+  // Privacy
   { href: "https://cashfusion.org/", src: "https://i.postimg.cc/sMZyfX9B/Cash-Fusion.png", alt: "CashFusion", caption: "CashFusion", subcaption: "Privacy Protocol" },
   { href: "https://ariavpn.net/", src: "https://i.postimg.cc/PC8hfxzP/aria.png", alt: "Aria", caption: "Aria", subcaption: "VPN Privacy" },
   { href: "https://mullvad.net/en", src: "https://i.postimg.cc/v46M8BLD/mullvad.png", alt: "Mullvad", caption: "Mullvad", subcaption: "VPN Privacy" },
   { href: "https://www.privateinternetaccess.com/", src: "https://i.postimg.cc/18NPRtcn/pia.png", alt: "PIA", caption: "PIA", subcaption: "VPN Privacy" },
-
-// Explorers
+  // Explorers
   { href: "https://cashtokenmarkets.bch-1.org/", src: "https://i.postimg.cc/k61x6Ft9/cashtokenmarkets.png", alt: "CashToken Markets", caption: "CashToken Markets", subcaption: "Explorers" },
   { href: "https://3xpl.com/bitcoin-cash", src: "https://i.postimg.cc/VrGjrBbc/3xpl.png", alt: "3xpl", caption: "3xpl", subcaption: "Explorers" },
   { href: "https://bchexplorer.cash/", src: "https://i.postimg.cc/9R8GRtqc/melroy.png", alt: "Melroy", caption: "Melroy", subcaption: "Explorers" },
@@ -434,8 +435,7 @@ const figures = [
   { href: "https://explorer.salemkode.com/", src: "https://i.postimg.cc/2VR4qxHq/bitcoincash.png", alt: "Salem Kode", caption: "Salem Kode", subcaption: "Explorers" },
   { href: "https://cashflow.dev/graph", src: "https://i.postimg.cc/2VR4qxHq/bitcoincash.png", alt: "Cashflow", caption: "Cashflow", subcaption: "Explorers" },
   { href: "https://tokenstork.com/", src: "https://i.postimg.cc/rKxMRX8v/Token-Stork.png", alt: "TokenStork", caption: "TokenStork", subcaption: "Explorers" },
-
-// Informational
+  // Informational
   { href: "https://minisatoshi.cash/upgrade-history", src: "https://i.postimg.cc/zbpZhC6V/minisatoshi.png", alt: "Minisatoshi", caption: "Minisatoshi", subcaption: "Informational" },
   { href: "https://bchfaq.com/", src: "https://i.postimg.cc/k6w3SQZk/BCHFAQ.png", alt: "Bitcoin Cash FAQ", caption: "Bitcoin Cash FAQ", subcaption: "Informational" },
   { href: "https://www.youtube.com/@BitcoinCashUniversity", src: "https://i.postimg.cc/J0C19KQs/BCH-University.png", alt: "BCH University", caption: "BCH University", subcaption: "Informational" },
@@ -620,11 +620,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // --- ADDITION: Back to Top Button Functionality ---
+// Make sure the button is circular on all devices
 const backToTopBtn = document.getElementById('backToTop');
 
 window.addEventListener('scroll', () => {
   if (window.pageYOffset > 300) {
-    backToTopBtn.style.display = 'block';
+    backToTopBtn.style.display = 'flex';
   } else {
     backToTopBtn.style.display = 'none';
   }
