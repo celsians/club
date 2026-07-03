@@ -214,8 +214,7 @@
     justify-content: center;
     align-items: center;
     z-index: 99999;
-    /* Add padding for smaller screens */
-    padding: 10px;
+    padding: 0; /* Removed padding for maximum size */
   }
   #iframeOverlay.show {
     display: flex;
@@ -225,13 +224,12 @@
     height: 80vh;
     max-width: 1000px;
     max-height: 700px;
-    border: none;
   }
   /* Responsive adjustment for very small screens */
   @media (max-width: 600px) {
     #refillsIframe {
-      width: 95vw;
-      height: 70vh;
+      width: 100vw;
+      height: 90vh; /* Increased height for mobile */
     }
   }
 
@@ -552,5 +550,7 @@ backToTopBtn.onclick = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 </script>
+</body>
+</html>
 </body>
 </html>
