@@ -62,39 +62,33 @@
     display: none;
   }
 
-  /* Always visible toggle button container (no background by default) */
-#toggle-container {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index: 1101;
-}
+  /* Toggle container, always fixed, but only shown when sidebar is collapsed */
+  #toggle-container {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: rgba(255,255,255,0.8);
+    padding: 4px 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    z-index: 1101;
+    display: none; /* default hidden */
+  }
+  /* Show toggle container only when body has class 'sidebar-collapsed' */
+body.sidebar-collapsed #toggle-container {
+    display: block;
+  }
 
-/* Toggle button styles, always visible */
+  /* Toggle button styles: no background container, just the button always visible */
 #sidebar-toggle {
   font-size: 1.5em;
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 4px;
-  outline: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: auto;
-  height: auto;
-  transition: background 0.3s, border-radius 0.3s;
+  padding: 4px 8px;
+  color: var(--text-color);
 }
 
-/* Style for bubble (solid semi-transparent circle) when sidebar is collapsed */
-#sidebar-toggle.bubble {
-  background: rgba(102, 204, 255, 0.4); /* semi-transparent solid color */
-  border-radius: 50%; /* perfect circle */
-  width: 40px;
-  height: 40px;
-}
-
-/* Mode toggle icon remains fixed at top-right */
 #mode-toggle {
   position: fixed;
   top: 10px;
@@ -127,23 +121,23 @@
   font-size: 2em;
   margin-top: 20px;
   margin-bottom: 10px;
-  margin-left: 0;
+  margin-left: 0; /* Hug the left edge */
   color: var(--blue-color);
 }
 
 #sidebar-title {
   font-family: 'Pacifico', cursive;
-  font-size: 1.2em;
+  font-size: 1.2em; /* smaller size */
   font-weight: normal;
-  margin-top: 10px;
-  margin-bottom: 15px;
+  margin-top: 10px; /* space above */
+  margin-bottom: 15px; /* space below */
   text-align: center;
   letter-spacing: 1px;
   line-height: 1.2em;
   color: var(--blue-color);
 }
 
-/* Container for categories buttons, hidden when sidebar collapsed */
+/* Category buttons container, hidden when sidebar is collapsed */
 #categoriesContainer {
   display: flex;
   flex-direction: column;
@@ -176,7 +170,7 @@
   margin-left: 140px;
   padding: 20px;
   flex: 1;
-  transition: all 0.3s;
+  transition: margin-left 0.3s;
 }
 body.collapsed-sidebar #content {
   margin-left: 60px;
@@ -185,12 +179,14 @@ body.sidebar-collapsed #content {
   margin-left: 0;
 }
 
-/* Figures grid styles */
+/* Figures grid with more columns on large screens and smaller screens */
 #figures {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: 15px;
 }
+
+/* For screens narrower than 600px, set exactly 3 columns */
 @media (max-width: 600px) {
   #figures {
     grid-template-columns: repeat(3, 1fr);
@@ -213,7 +209,7 @@ figure:hover {
   box-shadow: 0 12px 20px rgba(0,0,0,0.7);
 }
 figure img {
-  width: 80px;
+  width: 80px; /* smaller for better fit */
   height: auto;
 }
 figcaption {
@@ -246,35 +242,40 @@ figcaption {
   transform: scale(1.1);
 }
 
-/* Responsive video container */
+/* Responsive video container using padding-top for compatibility */
 .video-container {
   position: relative;
   width: 100%;
   max-width: 560px;
-  aspect-ratio: 16/9;
   margin-top: 10px;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
 }
 .video-container iframe {
   position: absolute;
   top: 0; left: 0;
   width: 100%;
   height: 100%;
+  border: none;
 }
 </style>
 </head>
 <body>
 
-<!-- Always visible toggle button container (no background unless collapsed) -->
+<!-- Toggle button always visible, wrapped in a container that shows only when sidebar is collapsed -->
 <div id="toggle-container">
   <button id="sidebar-toggle" title="Toggle Sidebar">☰</button>
 </div>
 
-<!-- Mode toggle -->
+<!-- Mode toggle icon -->
 <button id="mode-toggle" title="Toggle Light/Dark">🌙</button>
 
 <!-- Sidebar -->
 <div id="sidebar">
+  <!-- Small stacked title -->
   <div id="sidebar-title">Celsians<br>Club</div>
+  <!-- Search bar below the title -->
   <input type="search" id="sidebar-search" placeholder="Search Bitcoin Cash" />
   <div id="categoriesContainer">
     <button class="category-btn" data-filter="All"><span>All</span></button>
@@ -289,15 +290,11 @@ figcaption {
   </div>
 </div>
 
-<!-- Main content -->
-<div id="content">
-  <div class="video-container" style="margin-top:10px;">
-    <iframe src="https://www.youtube.com/embed/flPCk8Z5XS0" allowfullscreen></iframe>
-  </div>
+  <!-- Figures grid -->
   <div id="figures" style="margin-top:20px;"></div>
 </div>
 
-<!-- Back to Top -->
+<!-- Back to Top Button -->
 <div id="backToTop">↑</div>
 
 <script>
@@ -370,10 +367,10 @@ function filterFigures(type, value) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize dark mode
+  // Initialize in dark mode
   document.body.classList.add('dark-mode');
 
-  // Mode toggle
+  // Mode toggle icon
   const modeToggle = document.getElementById('mode-toggle');
   modeToggle.innerHTML = '🌙';
   modeToggle.onclick = () => {
@@ -390,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
   populateFigures();
   filterFigures('category', 'All');
 
-  // Search
+  // Sidebar search
   document.getElementById('sidebar-search').addEventListener('input', e => {
     filterFigures('search', e.target.value.toLowerCase());
   });
@@ -404,16 +401,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Toggle sidebar
   const sidebar = document.getElementById('sidebar');
+  const toggleContainer = document.getElementById('toggle-container');
   const toggleButton = document.getElementById('sidebar-toggle');
 
   toggleButton.onclick = () => {
+    // Toggle sidebar visibility
     sidebar.classList.toggle('hidden');
+    // Toggle class on body to show/hide the toggle container
     document.body.classList.toggle('sidebar-collapsed');
-    // Toggle the bubble class for perfect circle when collapsed
-    toggleButton.classList.toggle('bubble');
   };
 
-  // Show/hide back to top
+  // Show/hide Back to Top
   window.addEventListener('scroll', () => {
     document.getElementById('backToTop').style.display = (window.scrollY > 300) ? 'flex' : 'none';
   });
