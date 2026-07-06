@@ -54,53 +54,21 @@
     flex-direction: column;
     align-items: center;
     width: 220px;
-    transition: width 0.3s, padding 0.3s;
+    transition: width 0.3s;
     overflow: hidden;
     z-index: 1000;
-    padding-top: 10px;
   }
   #sidebar.collapsed {
     width: 60px;
-    padding-top: 10px;
   }
+
+  /* Hide elements when sidebar is collapsed */
   #sidebar.collapsed h1,
-  #sidebar.collapsed #categoriesContainer,
-  #sidebar.collapsed input[type="search"] {
+  #sidebar.collapsed #categoriesContainer {
     display: none;
   }
 
-  /* Title always hidden in collapsed mode, but kept for expanded */
-  #sidebar h1 {
-    font-family: 'Pacifico', cursive;
-    font-size: 2em;
-    background: linear-gradient(135deg, #89f7fe, #66a6ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-align: center;
-    margin-bottom: 10px;
-    width: 100%;
-  }
-
-  /* Toggle button fixed at top-left */
-  #toggleButton {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    background: white;
-    color: black;
-    border: none;
-    padding: 4px 8px;
-    border-radius: 3px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-    font-size: 1em;
-    cursor: pointer;
-    z-index: 1100;
-  }
-  #toggleButton:hover {
-    background: #f0f0f0;
-  }
-
-  /* Mode toggle icon */
+  /* Mode toggle icon (top-right) remains the same */
   #mode-toggle {
     position: fixed;
     top: 10px;
@@ -112,7 +80,7 @@
     z-index: 1100;
   }
 
-  /* Search styles, hidden in collapsed mode */
+  /* Search box styles - less vertical space */
   #sidebar input[type="search"] {
     margin-top: 10px;
     width: 100%;
@@ -122,8 +90,17 @@
     font-family: 'Ubuntu', Arial, sans-serif;
     font-size: 14px;
   }
+  #sidebar-search:focus {
+    box-shadow: 0 0 8px rgba(10, 193, 142, 0.6);
+    border-color: #0AC18E;
+  }
 
-  /* Category container, hidden when collapsed */
+  /* The blue title style */
+  #sidebar h1 {
+    margin-bottom: 10px;
+  }
+
+  /* Category buttons container, hidden when collapsed */
   #categoriesContainer {
     display: flex;
     flex-direction: column;
@@ -131,8 +108,6 @@
     width: 100%;
     margin-top: 10px;
   }
-
-  /* Category buttons */
   .category-btn {
     padding: 8px 12px;
     font-family: 'Ubuntu', Arial, sans-serif;
@@ -153,7 +128,7 @@
     display: none;
   }
 
-  /* Main content */
+  /* Main content styles */
 #content {
   margin-left: 220px;
   padding: 20px;
@@ -164,31 +139,14 @@ body.collapsed-sidebar #content {
   margin-left: 60px;
 }
 
-/* Figures grid – flexible flow, maintain aspect ratio scaling better */
+/* Figures grid - flexible, flowing layout */
 #figures {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 15px;
 }
 
-/* Responsive adjustments for smaller screens */
-@media(max-width: 1200px) {
-  #figures {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  }
-}
-@media(max-width: 900px) {
-  #figures {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  }
-}
-@media(max-width: 600px) {
-  #figures {
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-  }
-}
-
-/* Figures styling with better scaling */
+/* Figures styling */
 figure {
   background: var(--figure-bg);
   border-radius: 12px;
@@ -204,8 +162,9 @@ figure:hover {
   box-shadow: 0 12px 20px rgba(0,0,0,0.7);
 }
 figure img {
-  max-width: 100%;
-  height: auto; /* maintain aspect ratio */
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
   border-radius: 8px;
 }
 figcaption {
@@ -214,20 +173,61 @@ figcaption {
   color: var(--caption-color);
   text-align: center;
 }
+
+/* Back to Top button styles */
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: #66ccff;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5em;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px var(--shadow-color);
+  cursor: pointer;
+}
+#backToTop:hover {
+  background: #55bbee;
+  transform: scale(1.1);
+}
+
+/* Responsive video container for aspect ratio, hugging left */
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 16/9;
+  margin-top: 10px;
+}
+.video-container iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+}
 </style>
 </head>
 <body>
 
-<!-- Toggle button fixed at top-left -->
-<button id="toggleButton" title="Collapse/Expand Sidebar">☰</button>
+<!-- Removed toggle button code (since it's gone) -->
 
-<!-- Mode toggle icon -->
+<!-- Dark/Light mode toggle icon -->
 <button id="mode-toggle" title="Toggle Light/Dark">🌙</button>
 
 <!-- Sidebar -->
 <div id="sidebar">
-  <h1>𝕮𝖊𝖑𝖘𝖎𝖆𝖓𝖘 𝕮𝖑𝖚𝖇</h1>
+  <!-- Blue "Celsians Club" title above the search bar -->
+  <h1 style="color: white; font-family:'Pacifico', cursive; font-size:2em; margin-bottom:10px;">ℭ𝔢𝔩𝔰𝔦𝔞𝔫𝔰 ℭ𝔩𝔲𝔟</h1>
+  
+  <!-- Search bar below the title -->
   <input type="search" id="sidebar-search" placeholder="Search Bitcoin Cash" />
+  
   <div id="categoriesContainer">
     <button class="category-btn" data-filter="All"><span>All</span></button>
     <button class="category-btn" data-filter="Mutual Aid"><span>Mutual Aid</span></button>
@@ -243,16 +243,21 @@ figcaption {
 
 <!-- Main content -->
 <div id="content">
+  <!-- Keep or remove the main title here -->
+  <!-- <h1 style="text-align:left; font-family:'Pacifico', cursive; font-size:2em; margin-top:20px;">𝕮𝖆𝖑𝖘𝖎𝖆𝖓𝖘 𝕮𝖑𝖚𝖇</h1> -->
+  
   <div class="video-container" style="margin-top:10px;">
     <iframe src="https://www.youtube.com/embed/flPCk8Z5XS0" allowfullscreen></iframe>
   </div>
+  <!-- Figures grid -->
   <div id="figures" style="margin-top:20px;"></div>
 </div>
 
-<!-- Back to Top -->
+<!-- Back to Top Button -->
 <div id="backToTop">↑</div>
 
 <script>
+// Data for figures
 const figures = [
   { href: "https://unspent.cash/s?q=eJwrWymSLzSVO30Nv5%2Fkk3XaCw9OqzV5%2F2J5xxoAhj0L9g%3D%3D", src: "https://i.postimg.cc/8Ft68f9T/koala.png", alt: "Currumbin Wildlife Hospital", caption: "Mutual Aid" },
   { href: "https://unspent.cash/s?q=eJwrWyly6%2FGBQ1J7kj4zcBz4NT1vk0%2FSztpbHWsAtGYOCQ%3D%3D", src: "https://i.postimg.cc/jnzqbG26/elephants.png", alt: "Global Sanctuary for Elephants", caption: "Mutual Aid" },
@@ -324,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize in dark mode
   document.body.classList.add('dark-mode');
 
-  // Mode toggle
+  // Mode toggle icon
   const modeToggle = document.getElementById('mode-toggle');
   modeToggle.innerHTML = '🌙';
   modeToggle.onclick = () => {
@@ -341,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
   populateFigures();
   filterFigures('category', 'All');
 
-  // Search
+  // Sidebar search
   document.getElementById('sidebar-search').addEventListener('input', e => {
     filterFigures('search', e.target.value.toLowerCase());
   });
@@ -353,13 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   });
 
-  // Toggle sidebar
-  document.getElementById('toggleButton').onclick = () => {
-    document.getElementById('sidebar').classList.toggle('collapsed');
-    // No need for expanded class
-    document.getElementById('content').style.marginLeft = 
-      document.getElementById('sidebar').classList.contains('collapsed') ? '60px' : '220px';
-  };
+  // No toggle button code, since it's removed
 
   // Back to top
   window.addEventListener('scroll', () => {
