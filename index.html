@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>𝕮𝖊𝖑𝖘𝖎𝖆𝖓𝖘 𝕮𝖑𝖚𝖇</title>
+<title>All Figures with Collapsible Sidebar</title>
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet" />
@@ -18,310 +18,266 @@
     --figure-bg: #F3DCA3;
     --figure-shadow: rgba(0,0,0,0.1);
     --caption-color: #606060;
-    --title-gradient: linear-gradient(135deg, #89f7fe, #66a6ff);
   }
 
   body.dark-mode {
     --bg-color: #121212;
     --text-color: #eee;
-    --shadow-color: rgba(0,0,0,0.4);
-    --hover-shadow-color: rgba(0,0,0,0.6);
+    --shadow-color: rgba(0,0,0,0.6);
+    --hover-shadow-color: rgba(0,0,0,0.8);
     --filter-tag-bg: #333;
     --filter-tag-hover: #555;
     --figure-bg: #222;
-    --figure-shadow: rgba(0,0,0,0.5);
+    --figure-shadow: rgba(0,0,0,0.7);
     --caption-color: #aaa;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  #particle-background {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: -1;
-  }
+  * { box-sizing: border-box; margin: 0; padding: 0; cursor: pointer; }
 
   body {
     font-family: 'Ubuntu', Arial, sans-serif;
     background: var(--bg-color);
     color: var(--text-color);
     display: flex;
+    min-height: 100vh;
+  }
+
+  /* Sidebar styles */
+  #sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 100%;
+    background: var(--figure-bg);
+    box-shadow: 2px 0 4px var(--shadow-color);
+    padding: 10px;
+    display: flex;
     flex-direction: column;
-  }
-
-  /* Blur class for background content when iframe is active */
-  #backgroundContent.blur {
-    filter: blur(5px);
-    transition: filter 0.3s ease;
-  }
-
-  #header {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    background-color: var(--bg-color);
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     align-items: center;
-    gap: 10px;
-    z-index: 9999;
-    box-shadow: 0 2px 4px var(--shadow-color);
+    width: 220px;
+    transition: width 0.3s;
+    overflow: hidden;
+    z-index: 1000;
+  }
+  #sidebar.collapsed {
+    width: 60px;
   }
 
-  #title {
-    font-family: 'Pacifico', cursive;
-    font-size: 3em;
-    background: var(--title-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 0;
-    letter-spacing: 2px;
-    flex: 1 1 auto;
-    min-width: 200px;
-    text-align: center;
-  }
-
-  #top-buttons {
-    display: flex;
-    gap: 10px;
-  }
-
-  #darkModeToggle, #giftButton, #categoriesButton {
-    padding: 8px 12px;
+  /* Smaller toggle button (top-left, out of the way) */
+  #toggleButton {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: white;
+    color: black;
     border: none;
-    border-radius: 6px;
-    font-family: 'Ubuntu', Arial, sans-serif;
-    font-size: 0.9em;
+    padding: 4px 8px; /* smaller padding */
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    font-size: 1em; /* smaller icon size */
     cursor: pointer;
+    z-index: 1100;
   }
-  #darkModeToggle {
-    background: var(--filter-tag-bg);
-    color: var(--text-color);
-  }
-  #darkModeToggle:hover {
-    background: var(--filter-tag-hover);
-    transform: scale(1.05);
+  #toggleButton:hover {
+    background: #f0f0f0;
   }
 
-  #giftButton {
-    background: linear-gradient(135deg, #89f7fe, #66a6ff);
-    color: #fff;
-  }
-  #giftButton:hover {
-    box-shadow: 0 0 20px #66a6ff;
-    transform: scale(1.05);
-  }
-
-  #categoriesButton {
-    background: #ccc;
-  }
-  #categoriesButton:hover {
-    background: #bbb;
-    transform: scale(1.05);
+  /* Mode toggle icon (top-right) remains the same but smaller if desired */
+  #mode-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 1.2em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1100;
   }
 
-  #search-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  /* Space between toggle button and search inside sidebar */
+  #sidebar input[type="search"] {
+    margin-top: 40px; /* added space from the small toggle button */
+  }
+
+  /* Hide category text when collapsed */
+  #sidebar.collapsed #categoriesContainer {
+    display: none;
+  }
+  #sidebar.collapsed #categoryButton span {
+    display: none;
+  }
+
+  /* Search box styles */
+  #sidebar-search {
     width: 100%;
-    max-width: 600px;
-    margin-top: 10px;
-  }
-  #search-input {
-    padding: 10px 15px;
+    padding: 8px 12px;
     border-radius: 12px;
     border: 1px solid #ccc;
-    width: 100%;
     font-family: 'Ubuntu', Arial, sans-serif;
     font-size: 14px;
-    outline: none;
+    margin-bottom: 20px;
   }
-  #search-input:focus {
+  #sidebar-search:focus {
     box-shadow: 0 0 8px rgba(10, 193, 142, 0.6);
     border-color: #0AC18E;
   }
 
-  #tags {
+  /* Category buttons container */
+  #categoriesContainer {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
     gap: 8px;
-    margin-top: 8px;
+    width: 100%;
   }
-  .tag {
-    padding: 4px 8px;
-    font-size: 0.75em;
-    border: none;
-    border-radius: 6px;
-    background: var(--filter-tag-bg);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  .category-btn {
+    padding: 8px 12px;
+    font-family: 'Ubuntu', Arial, sans-serif;
+    font-size: 1em;
+    font-weight: bold;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background: var(--category-bg, #fff);
     cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
+    transition: background 0.2s, border-color 0.2s;
+    width: 100%;
   }
-  .tag:hover {
-    background: var(--filter-tag-hover);
-    transform: scale(1.05);
+  #sidebar.collapsed .category-btn {
+    padding: 8px;
+    font-size: 0;
+    border: none;
   }
-  body.dark-mode .tag {
-    background: #555;
-    color: #eee;
-  }
-  body.dark-mode .tag:hover {
-    background: #777;
+  #sidebar.collapsed .category-btn span {
+    display: none;
   }
 
-  #figuresGrid {
+  /* Main content */
+  #content {
+    margin-left: 220px;
+    padding: 20px;
+    flex: 1;
+    transition: margin-left 0.3s;
+  }
+  body.collapsed-sidebar #content {
+    margin-left: 60px;
+  }
+
+  /* Figures grid */
+  #figures {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 15px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
+  }
+  @media (max-width: 1200px) {
+    body.collapsed-sidebar #figures {
+      grid-template-columns: repeat(7, 1fr);
+    }
   }
 
-  figure {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  /* Figures styling */
+figure {
     background: var(--figure-bg);
     border-radius: 12px;
     box-shadow: 0 4px 8px var(--figure-shadow);
     padding: 10px;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  figure:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 20px var(--hover-shadow-color);
-  }
-  figure img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    border-radius: 8px;
-    padding: 4px;
-  }
-  figcaption {
-    margin-top: 8px;
-    font-size: 0.75em;
-    color: var(--caption-color);
-  }
-
-  /* Overlay for iframe */
-  #iframeOverlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.8);
-    justify-content: center;
-    align-items: center;
-    z-index: 99999;
-    padding: 0;
-  }
-  #iframeOverlay.show {
     display: flex;
-  }
-  #refillsIframe {
-    width: 90vw;
-    height: 80vh;
-    max-width: 1000px;
-    max-height: 700px;
-  }
-  @media(max-width: 600px) {
-    #refillsIframe {
-      width: 100vw;
-      height: 90vh;
-    }
-  }
-
-  #closeIframe {
-    position: absolute;
-    top: 10px; right: 15px;
-    width: 30px; height: 30px;
-    background: #f44336;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    font-size: 20px;
-    cursor: pointer;
-    z-index: 100000;
-  }
-
-  #backToTop {
-    position: fixed;
-    bottom: 30px; right: 30px;
-    width: 50px; height: 50px;
-    font-size: 1.5em;
-    background-color: #66ccff;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 4px 8px var(--shadow-color);
-    display: none;
-    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s, transform 0.3s;
+    transition: 0.3s;
   }
-  #backToTop:hover {
-    background-color: #55bbee;
-    transform: scale(1.1);
-  }
+figure:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.7);
+}
+figure img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+figcaption {
+  margin-top: 8px;
+  font-size: 0.75em;
+  color: var(--caption-color);
+  text-align: center;
+}
 
-  /* Add this for blurring the background behind iframe only */
-  #backgroundContent.blur {
-    filter: blur(5px);
-    transition: filter 0.3s ease;
-  }
+/* Back to Top button styles */
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: #66ccff;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5em;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px var(--shadow-color);
+  cursor: pointer;
+}
+#backToTop:hover {
+  background: #55bbee;
+  transform: scale(1.1);
+}
+
+/* Responsive video container for aspect ratio */
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 16/9;
+  margin: 0 auto;
+}
+.video-container iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+}
 </style>
 </head>
-<body class="dark-mode">
-<!-- Wrap all main content here for blurring -->
-<div id="backgroundContent">
-  <!-- Particle background -->
-  <canvas id="particle-background"></canvas>
+<body>
 
-  <header id="header">
-    <h1 id="title" onclick="location.reload();">𝕮𝖊𝖑𝖘𝖎𝖆𝖓𝖘 𝕮𝖑𝖚𝖇</h1>
-    <div id="top-buttons">
-      <button id="darkModeToggle">Dark Mode</button>
-      <button id="giftButton">Gift Cards</button>
-      <button id="categoriesButton">All Categories</button>
-    </div>
-    <div id="search-container" style="width:100%; max-width:600px; margin-top:10px;">
-      <input type="search" id="search-input" placeholder="Discover Bitcoin Cash" />
-    </div>
-    <div id="categoriesContainer" style="display: none; margin-top: 10px; justify-content: center; flex-wrap: wrap;">
-      <button class="tag" data-filter="All">All</button>
-      <button class="tag" data-filter="Mutual Aid">Mutual Aid</button>
-      <button class="tag" data-filter="Self Custody">Self Custody</button>
-      <button class="tag" data-filter="Privacy">Privacy</button>
-      <button class="tag" data-filter="Informational">Informational</button>
-      <button class="tag" data-filter="Explorers">Explorers</button>
-      <button class="tag" data-filter="Community">Community</button>
-      <button class="tag" data-filter="DeFi">DeFi</button>
-      <button class="tag" data-filter="Commerce">Commerce</button>
-    </div>
-  </header>
+<!-- Smaller toggle button (top-left, out of the way) -->
+<button id="toggleButton" title="Collapse/Expand Sidebar">☰</button>
 
-  <div id="main">
-    <div id="figuresGrid"></div>
+<!-- Dark/Light mode toggle icon (top-right) -->
+<button id="mode-toggle" title="Toggle Light/Dark">🌙</button>
+
+<!-- Sidebar -->
+<div id="sidebar">
+  <input type="search" id="sidebar-search" placeholder="Search Bitcoin Cash" />
+  <div id="categoriesContainer">
+    <button class="category-btn" data-filter="All"><span>All</span></button>
+    <button class="category-btn" data-filter="Mutual Aid"><span>Mutual Aid</span></button>
+    <button class="category-btn" data-filter="Self Custody"><span>Self Custody</span></button>
+    <button class="category-btn" data-filter="Privacy"><span>Privacy</span></button>
+    <button class="category-btn" data-filter="Informational"><span>Informational</span></button>
+    <button class="category-btn" data-filter="Explorers"><span>Explorers</span></button>
+    <button class="category-btn" data-filter="Community"><span>Community</span></button>
+    <button class="category-btn" data-filter="DeFi"><span>DeFi</span></button>
+    <button class="category-btn" data-filter="Commerce"><span>Commerce</span></button>
   </div>
 </div>
 
-<!-- Iframe overlay -->
-<div id="iframeOverlay">
-  <button id="closeIframe">&times;</button>
-  <iframe src="" id="refillsIframe"></iframe>
+<!-- Main content -->
+<div id="content">
+  <h1 style="font-family:'Pacifico', cursive; font-size:2em; background: linear-gradient(135deg, #89f7fe, #66a6ff); -webkit-background-clip:text; -webkit-text-fill-color: transparent; text-align:center;">𝕮𝖊𝖑𝖘𝖎𝖆𝖓𝖘 𝕮𝖑𝖚𝖇</h1>
+  
+  <!-- Responsive Video -->
+  <div class="video-container" style="margin-top:10px;">
+    <iframe src="https://www.youtube.com/embed/flPCk8Z5XS0" allowfullscreen></iframe>
+  </div>
+
+  <!-- Figures grid -->
+  <div id="figures" style="margin-top:20px;"></div>
 </div>
 
 <!-- Back to Top Button -->
-<button id="backToTop" title="Back to Top">↑</button>
+<div id="backToTop">↑</div>
 
 <script>
 // Full figures array
@@ -397,7 +353,6 @@ const figures = [
   { href: "https://realbitcoin.cash/", src: "https://i.postimg.cc/TLQMbVFT/bitcoincash.png", alt: "Real Bitcoin Cash", caption: "Real Bitcoin Cash", subcaption: "Informational" },
 ];
 
-// Shuffle function
 function shuffleArray(array) {
   for (let i=array.length-1; i>0; i--) {
     const j = Math.floor(Math.random() * (i+1));
@@ -405,172 +360,98 @@ function shuffleArray(array) {
   }
 }
 
-// Populate figures
 function populateFigures() {
-  const container = document.getElementById('figuresGrid');
-  let html = '';
+  const container = document.getElementById('figures');
+  container.innerHTML = '';
   figures.forEach(item => {
-    html += `
-      <figure>
-        <a href="${item.href}" target="_blank" rel="noopener noreferrer">
-          <img src="${item.src}" alt="${item.alt}">
-        </a>
-        <figcaption>${item.caption}${item.subcaption ? `<p style="color: #c0c0c0;">${item.subcaption}</p>` : ''}</figcaption>
-      </figure>
+    const figure = document.createElement('figure');
+    figure.setAttribute('data-category', item.caption);
+    figure.innerHTML = `
+      <a href="${item.href}" target="_blank" rel="noopener noreferrer">
+        <img src="${item.src}" alt="${item.alt}">
+      </a>
+      <figcaption>${item.alt}</figcaption>
     `;
+    container.appendChild(figure);
   });
-  container.innerHTML = html;
 }
 
-// DOM load
-document.addEventListener('DOMContentLoaded', () => {
-  document.body.classList.add('dark-mode');
-  document.getElementById('darkModeToggle').textContent = 'Light Mode';
-
-  shuffleArray(figures);
-  populateFigures();
-});
-
-// Search filter
-document.getElementById('search-input').addEventListener('input', () => {
-  const query = document.getElementById('search-input').value.toLowerCase();
-  document.querySelectorAll('#figuresGrid figure').forEach(fig => {
-    const caption = fig.querySelector('figcaption').textContent.toLowerCase();
-    fig.style.display = caption.includes(query) ? '' : 'none';
-  });
-});
-
-// Filter tags
-document.querySelectorAll('.tag').forEach(tag => {
-  tag.onclick = () => {
-    const filterVal = tag.dataset.filter.toLowerCase();
-    document.querySelectorAll('#figuresGrid figure').forEach(fig => {
-      const caption = fig.querySelector('figcaption').textContent.toLowerCase();
-      if (filterVal === 'all' || caption.includes(filterVal)) {
+function filterFigures(type, value) {
+  document.querySelectorAll('#figures figure').forEach(fig => {
+    const category = fig.dataset.category.toLowerCase();
+    const alt = fig.querySelector('img').alt.toLowerCase();
+    if (type === 'category') {
+      if (value === 'All' || category === value.toLowerCase()) {
         fig.style.display = '';
       } else {
         fig.style.display = 'none';
       }
-    });
+    } else if (type === 'search') {
+      if (value === 'all' || category.includes(value) || alt.includes(value)) {
+        fig.style.display = '';
+      } else {
+        fig.style.display = 'none';
+      }
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize in dark mode
+  document.body.classList.add('dark-mode');
+
+  // Mode toggle icon
+  const modeToggle = document.getElementById('mode-toggle');
+  modeToggle.innerHTML = '🌙';
+  modeToggle.onclick = () => {
+    document.body.classList.toggle('dark-mode');
+    if (document.body.classList.contains('dark-mode')) {
+      modeToggle.innerHTML = '🌙';
+    } else {
+      modeToggle.innerHTML = '☀️';
+    }
+  };
+
+  // Populate figures
+  shuffleArray(figures);
+  populateFigures();
+  filterFigures('category', 'All');
+
+  // Sidebar search
+  document.getElementById('sidebar-search').addEventListener('input', e => {
+    filterFigures('search', e.target.value.toLowerCase());
+  });
+
+  // Category buttons
+  document.querySelectorAll('.category-btn').forEach(btn => {
+    btn.onclick = () => {
+      filterFigures('category', btn.dataset.filter);
+    };
+  });
+
+  // Collapse/expand sidebar
+  document.getElementById('toggleButton').onclick = () => {
+    document.getElementById('sidebar').classList.toggle('collapsed');
+    document.getElementById('content').style.marginLeft = 
+      document.getElementById('sidebar').classList.contains('collapsed') ? '60px' : '220px';
+    if (document.getElementById('sidebar').classList.contains('collapsed')) {
+      document.getElementById('figures').style.gridTemplateColumns = 'repeat(7, 1fr)';
+    } else {
+      document.getElementById('figures').style.gridTemplateColumns = 'repeat(auto-fit,minmax(150px,1fr))';
+    }
+  };
+
+  // Back to top
+  window.addEventListener('scroll', () => {
+    document.getElementById('backToTop').style.display = (window.scrollY > 300) ? 'flex' : 'none';
+  });
+  document.getElementById('backToTop').onclick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 });
-
-// Category toggle
-const categoriesBtn = document.getElementById('categoriesButton');
-const categoriesContainer = document.getElementById('categoriesContainer');
-categoriesBtn.onclick = () => {
-  categoriesContainer.style.display = categoriesContainer.style.display === 'none' ? 'flex' : 'none';
-};
-
-// Toggle dark mode
-const darkModeBtn = document.getElementById('darkModeToggle');
-const body = document.body;
-darkModeBtn.onclick = () => {
-  body.classList.toggle('dark-mode');
-  darkModeBtn.textContent = body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
-};
-
-// Handle Gift Cards button to open iframe directly
-const giftBtn = document.getElementById('giftButton');
-giftBtn.onclick = () => {
-  document.getElementById('iframeOverlay').classList.add('show');
-  document.getElementById('refillsIframe').src = 'https://www.cryptorefills.com/?ref=L4JVzCcsxp';
-  backgroundContent.classList.add('blur'); // Blur background behind iframe
-};
-
-// Close iframe overlay
-document.getElementById('closeIframe').onclick = () => {
-  document.getElementById('iframeOverlay').classList.remove('show');
-  document.getElementById('refillsIframe').src = '';
-  backgroundContent.classList.remove('blur'); // Remove blur
-};
-document.getElementById('iframeOverlay').onclick = (e) => {
-  if (e.target === document.getElementById('iframeOverlay')) {
-    document.getElementById('iframeOverlay').classList.remove('show');
-    document.getElementById('refillsIframe').src = '';
-    backgroundContent.classList.remove('blur');
-  }
-};
-
-// Particles (your existing code omitted for brevity)
-const canvas = document.getElementById('particle-background');
-const ctx = canvas.getContext('2d');
-function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-class Particle {
-  constructor() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.size = Math.random() * 2 + 1;
-    this.speedX = (Math.random() - 0.5) * 0.5;
-    this.speedY = (Math.random() - 0.5) * 0.5;
-    this.color = 'rgba(0, 150, 255, 0.5)';
-  }
-  update() {
-    this.x += this.speedX; this.y += this.speedY;
-    if (this.x < 0) this.x = canvas.width;
-    if (this.x > canvas.width) this.x = 0;
-    if (this.y < 0) this.y = canvas.height;
-    if (this.y > canvas.height) this.y = 0;
-  }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
-    ctx.fillStyle = this.color;
-    ctx.fill();
-  }
-}
-let particlesArray = [];
-function init() {
-  for (let i=0; i<80; i++) { particlesArray.push(new Particle()); }
-}
-init();
-
-const mouse = { x: null, y: null, radius: 100 };
-window.addEventListener('mousemove', e => { mouse.x=e.clientX; mouse.y=e.clientY; });
-window.addEventListener('mouseout', () => { mouse.x=null; mouse.y=null; });
-function animate() {
-  ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-  for (let p of particlesArray) {
-    if (mouse.x !== null && mouse.y !== null) {
-      const dx = p.x - mouse.x; const dy = p.y - mouse.y;
-      const dist = Math.sqrt(dx*dx+dy*dy);
-      if (dist<mouse.radius) {
-        const force = (mouse.radius - dist)/mouse.radius;
-        p.x += (dx/dist)*force*2;
-        p.y += (dy/dist)*force*2;
-      }
-    }
-    p.update(); p.draw();
-  }
-  for (let a=0; a<particlesArray.length; a++) {
-    for (let b=a+1; b<particlesArray.length; b++) {
-      const dx = particlesArray[a].x - particlesArray[b].x;
-      const dy = particlesArray[a].y - particlesArray[b].y;
-      const dist = Math.sqrt(dx*dx+dy*dy);
-      if (dist<100) {
-        ctx.beginPath();
-        ctx.strokeStyle='rgba(0,150,255,0.1)';
-        ctx.lineWidth=1;
-        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-        ctx.stroke();
-      }
-    }
-  }
-  requestAnimationFrame(animate);
-}
-animate();
-
-const backToTopBtn = document.getElementById('backToTop');
-window.addEventListener('scroll', () => {
-  backToTopBtn.style.display = (window.pageYOffset > 300) ? 'flex' : 'none';
-});
-backToTopBtn.onclick = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
 </script>
+
+</body>
+</html>
 </body>
 </html>
