@@ -160,17 +160,17 @@ body.collapsed-sidebar #content {
   margin-left: 60px;
 }
 
-/* Figures grid with more columns on large screens */
+/* Figures grid with more columns on large screens and smaller screens */
 #figures {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: 15px;
 }
 
-/* For screens wider than 1200px, display exactly 6 columns */
-@media (min-width: 1200px) {
+/* For screens narrower than 600px, set exactly 3 columns */
+@media (max-width: 600px) {
   #figures {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -190,10 +190,8 @@ figure:hover {
   box-shadow: 0 12px 20px rgba(0,0,0,0.7);
 }
 figure img {
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-  border-radius: 8px;
+  width: 80px; /* smaller width for better mobile fit */
+  height: auto; /* maintain aspect ratio */
 }
 figcaption {
   margin-top: 8px;
@@ -209,7 +207,7 @@ figcaption {
   right: 30px;
   width: 50px;
   height: 50px;
-  background: var(--blue-color); /* same blue as title */
+  background: var(--blue-color);
   color: #fff;
   border: none;
   border-radius: 50%;
