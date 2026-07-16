@@ -136,7 +136,7 @@
     position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
     background: var(--blue-color); color: #fff; border: none; border-radius: 50%; font-size: 1.5em;
     display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 8px var(--shadow-color); cursor: pointer;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease, transform 0.2s ease;
   }
   #backToTop.hidden {
     opacity: 0;
@@ -320,7 +320,12 @@ function filterFigures(type, value) {
   });
 }
 
-let backToTopTimeout = null;
+const backBtn = document.getElementById('backToTop');
+
+// Initially hide the button
+backBtn.classList.add('hidden');
+
+let hideTimeout = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   // Dark mode toggle
@@ -348,19 +353,20 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Back to top fade out after scrolling stops
-  const backBtn = document.getElementById('backToTop');
-  backBtn.style.display = 'flex'; // initially show
-  backBtn.classList.remove('hidden'); // ensure visible initially
+  // Button initially hidden
+  backBtn.classList.add('hidden');
 
   window.addEventListener('scroll', () => {
-    backBtn.style.display = 'flex'; // show when scrolling
-    backBtn.classList.remove('hidden'); // remove fade-out if any
+    // Show the button when scrolling
+    backBtn.classList.remove('hidden');
 
-    if (backToTopTimeout) {
-      clearTimeout(backToTopTimeout);
+    // Clear previous timeout if any
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
     }
-    backToTopTimeout = setTimeout(() => {
-      backBtn.classList.add('hidden'); // fade out after 2 seconds
+    // Set timeout to hide after 2 seconds of no scroll
+    hideTimeout = setTimeout(() => {
+      backBtn.classList.add('hidden');
     }, 2000);
   });
 
